@@ -143,12 +143,14 @@ impl Float2 {
         }
     }
 
-    /// Computes the per-component cosine numbers (in radians).
-    pub fn cos(&self) -> Self {
-        Self {
-            x: self.x.cos(),
-            y: self.y.cos(),
-        }
+    /// Determines if all components of the vector are non-zero.
+    pub fn all(&self) -> bool {
+        self.x != 0.0 && self.y != 0.0
+    }
+
+    /// Determines if any components of the vector are non-zero.
+    pub fn any(&self) -> bool {
+        self.x != 0.0 || self.y != 0.0
     }
 
     /// Computes the per-component arcsine numbers (in radians).
@@ -161,22 +163,86 @@ impl Float2 {
         }
     }
 
+    /// Computes the per-component arctangent numbers (in radians).
+    /// Return values are in the range -pi/2 to pi/2.
+    pub fn atan(&self) -> Self {
+        Self {
+            x: self.x.atan(),
+            y: self.y.atan(),
+        }
+    }
+
+    /// Computes the four quadrant arctangent of y and x (in radians).
+    pub fn atan2(&self) -> f32 {
+        self.y.atan2(self.x)
+    }
+
+    /// Computes the per-component smallest integer greater than or equal to `self.x` and `self.y` respectively.
+    pub fn ceil(&self) -> Self {
+        Self {
+            x: self.x.ceil(),
+            y: self.y.ceil(),
+        }
+    }
+
+    /// Computes the per-component clamped numbers between `min` and `max`.
+    pub fn clamp(&self, min: f32, max: f32) -> Self {
+        Self {
+            x: self.x.clamp(min, max),
+            y: self.y.clamp(min, max),
+        }
+    }
+
+    /// Computes the per-component cosine numbers (in radians).
+    pub fn cos(&self) -> Self {
+        Self {
+            x: self.x.cos(),
+            y: self.y.cos(),
+        }
+    }
+
+    /// Computes the per-component hyperbolic cosine numbers.
+    pub fn cosh(&self) -> Self {
+        Self {
+            x: self.x.cosh(),
+            y: self.y.cosh(),
+        }
+    }
+
+    /// Converts the per-component numbers from radians to degrees.
+    pub fn degrees(&self) -> Self {
+        Self {
+            x: self.x.to_degrees(),
+            y: self.y.to_degrees(),
+        }
+    }
+
+    /// Computes the distance scalar between two vectors.
+    pub fn distance(&self, rhs: &Self) -> f32 {
+        let dx = self.x - rhs.x;
+        let dy = self.y - rhs.y;
+        (dx * dx + dy * dy).sqrt()
+    }
+
+    /// Computes the dot product of two vectors.
+    pub fn dot(&self, rhs: &Self) -> f32 {
+        self.x * rhs.x + self.y * rhs.y
+    }
+
+    /// Converts the per-component numbers from degrees to radians.
+    pub fn radians(&self) -> Self {
+        Self {
+            x: self.x.to_radians(),
+            y: self.y.to_radians(),
+        }
+    }
+
     /// Computes the per-component sine numbers (in radians).
     pub fn sin(&self) -> Self {
         Self {
             x: self.x.sin(),
             y: self.y.sin(),
         }
-    }
-
-    /// Determines if all components of the vector are non-zero.
-    pub fn all(&self) -> bool {
-        self.x != 0.0 && self.y != 0.0
-    }
-
-    /// Determines if any components of the vector are non-zero.
-    pub fn any(&self) -> bool {
-        self.x != 0.0 || self.y != 0.0
     }
 
     /// Returns a swizzled vector.

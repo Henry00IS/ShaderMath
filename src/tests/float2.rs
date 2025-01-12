@@ -82,40 +82,30 @@ fn float2_ops_div_assign() {
 }
 
 #[test]
-fn float2_neg() {
+fn float2_ops_neg() {
     let result = -Float2::new(1.5, 2.5);
     assert_eq!(result.x, -1.5);
     assert_eq!(result.y, -2.5);
 }
 
 #[test]
-fn float2_sin() {
-    let a = Float2::new(PI, PI * 2.0);
-    let result = a.sin();
-    assert_eq!(result.x, -8.742278e-8);
-    assert_eq!(result.y, 1.7484555e-7);
-}
+fn float2_equality() {
+    let mut a = Float2::new(20.0, 1.0);
+    let b = a;
+    a += b;
+    assert_eq!(a.x, 40.0);
+    assert_eq!(a.y, 2.0);
+    assert_eq!(b.x, 20.0);
+    assert_eq!(b.y, 1.0);
 
-#[test]
-fn float2_acos() {
-    let a = Float2::new(0.5, -0.5);
-    let result = a.acos();
-    assert_eq!(result, Float2::new(1.0471976, 2.0943952));
-}
+    assert_eq!(a == b, false);
 
-#[test]
-fn float2_asin() {
-    let a = Float2::new(0.5, -0.5);
-    let result = a.asin();
-    assert_eq!(result, Float2::new(0.5235988, -0.5235988));
-}
+    assert_ne!(a, b);
+    let a = Float2::new(20.0, 1.0);
+    assert_eq!(a, b);
 
-#[test]
-fn float2_cos() {
-    let a = Float2::new(PI, PI * 2.0);
-    let result = a.cos();
-    assert_eq!(result.x, -1.0);
-    assert_eq!(result.y, 1.0);
+    assert_eq!(a == b, true);
+    assert_eq!(a != b, false);
 }
 
 #[test]
@@ -124,6 +114,13 @@ fn float2_abs() {
     let result = a.abs();
     assert_eq!(result.x, PI);
     assert_eq!(result.y, PI * 2.0);
+}
+
+#[test]
+fn float2_acos() {
+    let a = Float2::new(0.5, -0.5);
+    let result = a.acos();
+    assert_eq!(result, Float2::new(1.0471976, 2.0943952));
 }
 
 #[test]
@@ -165,28 +162,100 @@ fn float2_any() {
 }
 
 #[test]
-fn float2_equality() {
-    let mut a = Float2::new(20.0, 1.0);
-    let b = a;
-    a += b;
-    assert_eq!(a.x, 40.0);
-    assert_eq!(a.y, 2.0);
-    assert_eq!(b.x, 20.0);
-    assert_eq!(b.y, 1.0);
-
-    assert_eq!(a == b, false);
-
-    assert_ne!(a, b);
-    let a = Float2::new(20.0, 1.0);
-    assert_eq!(a, b);
-
-    assert_eq!(a == b, true);
-    assert_eq!(a != b, false);
+fn float2_asin() {
+    let a = Float2::new(0.5, -0.5);
+    let result = a.asin();
+    assert_eq!(result, Float2::new(0.5235988, -0.5235988));
 }
 
 #[test]
-fn float2_swizzle()
-{
+fn float2_atan() {
+    let a = Float2::new(0.5, -0.5);
+    let result = a.atan();
+    assert_eq!(result, Float2::new(0.4636476, -0.4636476));
+}
+
+#[test]
+fn float2_atan2() {
+    let a = Float2::new(0.5, -0.5);
+    let result = a.atan2();
+    assert_eq!(result, -0.7853982);
+}
+
+#[test]
+fn float2_ceil() {
+    let a = Float2::new(0.9, -0.2);
+    let result = a.ceil();
+    assert_eq!(result.x, 1.0);
+    assert_eq!(result.y, 0.0);
+}
+
+#[test]
+fn float2_clamp() {
+    let a = Float2::new(0.9, -0.2);
+    let result = a.clamp(0.0, 0.5);
+    assert_eq!(result.x, 0.5);
+    assert_eq!(result.y, 0.0);
+}
+
+#[test]
+fn float2_cos() {
+    let a = Float2::new(PI, PI * 2.0);
+    let result = a.cos();
+    assert_eq!(result.x, -1.0);
+    assert_eq!(result.y, 1.0);
+}
+
+#[test]
+fn float2_cosh() {
+    let a = Float2::new(0.9, -0.2);
+    let result = a.cosh();
+    assert_eq!(result.x, 1.4330864);
+    assert_eq!(result.y, 1.0200667);
+}
+
+#[test]
+fn float2_degrees() {
+    let a = Float2::new(PI, PI * 0.5);
+    let result = a.degrees();
+    assert_eq!(result.x, 180.0);
+    assert_eq!(result.y, 90.0);
+}
+
+#[test]
+fn float2_distance() {
+    let a = Float2::new(1.0, 1.0);
+    let b = Float2::new(5.0, 5.0);
+    let result = a.distance(&b);
+    assert_eq!(result, 5.656854);
+}
+
+#[test]
+fn float2_dot() {
+    let a = Float2::new(1.0, 1.0);
+    let b = Float2::new(5.0, 5.0);
+    let result = a.dot(&b);
+    assert_eq!(result, 10.0);
+}
+
+#[test]
+fn float2_radians() {
+    let a = Float2::new(180.0, 90.0);
+    let result = a.radians();
+    assert_eq!(result.x, PI);
+    assert_eq!(result.y, PI * 0.5);
+}
+
+#[test]
+fn float2_sin() {
+    let a = Float2::new(PI, PI * 2.0);
+    let result = a.sin();
+    assert_eq!(result.x, -8.742278e-8);
+    assert_eq!(result.y, 1.7484555e-7);
+}
+
+#[test]
+fn float2_swizzle() {
     let x = 1.0;
     let y = 2.0;
     let a = Float2::new(x, y);
