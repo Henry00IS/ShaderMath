@@ -239,6 +239,116 @@ fn float2_dot() {
 }
 
 #[test]
+fn float2_exp() {
+    let a = Float2::new(2.0, 4.0);
+    let result = a.exp();
+    assert_eq!(result.x, 7.389056);
+    assert_eq!(result.y, 54.59815);
+}
+
+#[test]
+fn float2_exp2() {
+    let a = Float2::new(2.0, 4.0);
+    let result = a.exp2();
+    assert_eq!(result.x, 4.0);
+    assert_eq!(result.y, 16.0);
+}
+
+#[test]
+fn float2_floor() {
+    let a = Float2::new(0.9, -0.2);
+    let result = a.floor();
+    assert_eq!(result.x, 0.0);
+    assert_eq!(result.y, -1.0);
+}
+
+#[test]
+fn float2_fmod() {
+    let a = Float2::new(0.2, 2.0);
+    let b = Float2::new(2.0, 4.0);
+    let result = a.fmod(&b);
+    assert_eq!(result.x, 0.2);
+    assert_eq!(result.y, 2.0);
+}
+
+#[test]
+fn float2_frac() {
+    let a = Float2::new(24.50, 8.25);
+    let result = a.frac();
+    assert_eq!(result.x, 0.5);
+    assert_eq!(result.y, 0.25);
+}
+
+#[test]
+fn float2_length() {
+    let a = Float2::new(0.7, 0.714143);
+    let result = a.length();
+    assert_eq!(result, 1.0);
+}
+
+#[test]
+fn float2_lerp() {
+    let a = Float2::new(0.0, 0.1);
+    let b = Float2::new(2.0, 4.1);
+    assert_eq!(a.lerp(&b, 0.5), Float2::new(1.0, 2.1));
+    assert_eq!(a.lerp(&b, 1.5), Float2::new(3.0, 6.1));
+}
+
+#[test]
+fn float2_log() {
+    let a = Float2::new(1.0, 2.0);
+    assert_eq!(a.log(), Float2::new(0.0, 0.6931472));
+}
+
+#[test]
+fn float2_log10() {
+    let a = Float2::new(1.0, 10.0);
+    assert_eq!(a.log10(), Float2::new(0.0, 1.0));
+}
+
+#[test]
+fn float2_log2() {
+    let a = Float2::new(1.0, 2.0);
+    assert_eq!(a.log2(), Float2::new(0.0, 1.0));
+}
+
+#[test]
+fn float2_mad() {
+    let a = Float2::new(2.0, 2.0);
+    let b = Float2::new(4.0, 5.0);
+    let c = Float2::new(0.5, 0.25);
+    assert_eq!(a.mad(&b, &c), Float2::new(8.5, 10.25));
+}
+
+#[test]
+fn float2_max() {
+    let a = Float2::new(2.0, 2.0);
+    let b = Float2::new(4.0, 1.0);
+    assert_eq!(a.max(&b), Float2::new(4.0, 2.0));
+}
+
+#[test]
+fn float2_min() {
+    let a = Float2::new(2.0, 2.0);
+    let b = Float2::new(4.0, 1.0);
+    assert_eq!(a.min(&b), Float2::new(2.0, 1.0));
+}
+
+#[test]
+fn float2_normalize() {
+    let a = Float2::new(2.0, 1.0);
+    assert_eq!(a.normalize(), Float2::new(0.8944272, 0.4472136));
+    let a = Float2::new(0.0, 0.0);
+    assert_eq!(a.normalize(), Float2::new(0.0, 0.0));
+}
+
+#[test]
+fn float2_pow() {
+    let a = Float2::new(2.0, 1.0);
+    assert_eq!(a.pow(2.0), Float2::new(4.0, 1.0));
+}
+
+#[test]
 fn float2_radians() {
     let a = Float2::new(180.0, 90.0);
     let result = a.radians();
@@ -247,11 +357,141 @@ fn float2_radians() {
 }
 
 #[test]
+fn float2_rcp() {
+    let a = Float2::new(2.0, 4.0);
+    let result = a.rcp();
+    assert_eq!(result.x, 0.5);
+    assert_eq!(result.y, 0.25);
+    let a = Float2::new(2.0, 0.0);
+    let result = a.rcp_safe();
+    assert_eq!(result.y, 0.0);
+}
+
+#[test]
+fn float2_reflect() {
+    let incident = Float2::new(1.0, -1.0);
+    let normal = Float2::new(0.0, 1.0);
+    let result = incident.reflect(&normal);
+    assert_eq!(result.x, 1.0);
+    assert_eq!(result.y, 1.0);
+}
+
+#[test]
+fn float2_refract() {
+    let incident = Float2::new(1.0, -1.0);
+    let normal = Float2::new(0.0, 1.0);
+    let eta = 0.5;
+    let result = incident.refract(&normal, eta);
+    assert_eq!(result.x, 0.5);
+    assert_eq!(result.y, -1.0);
+}
+
+#[test]
+fn float2_round() {
+    let a = Float2::new(0.9, -0.2);
+    let result = a.round();
+    assert_eq!(result.x, 1.0);
+    assert_eq!(result.y, 0.0);
+}
+
+#[test]
+fn float2_rsqrt() {
+    let a = Float2::new(1.0, 4.0);
+    let result = a.rsqrt();
+    assert_eq!(result.x, 1.0);
+    assert_eq!(result.y, 0.5);
+}
+
+#[test]
+fn float2_saturate() {
+    let a = Float2::new(2.9, -0.2);
+    let result = a.saturate();
+    assert_eq!(result.x, 1.0);
+    assert_eq!(result.y, 0.0);
+}
+
+#[test]
+fn float2_sign() {
+    let a = Float2::new(2.9, -0.2);
+    let result = a.sign();
+    assert_eq!(result.x, 1.0);
+    assert_eq!(result.y, -1.0);
+}
+
+#[test]
 fn float2_sin() {
     let a = Float2::new(PI, PI * 2.0);
     let result = a.sin();
     assert_eq!(result.x, -8.742278e-8);
     assert_eq!(result.y, 1.7484555e-7);
+}
+
+#[test]
+fn float2_sinh() {
+    let a = Float2::new(0.9, -0.2);
+    let result = a.sinh();
+    assert_eq!(result.x, 1.0265167);
+    assert_eq!(result.y, -0.20133601);
+}
+
+#[test]
+fn float2_smoothstep() {
+    let a = Float2::new(0.0, 0.0);
+    let b = Float2::new(1.0, 1.0);
+    let c = Float2::new(0.5, 1.5);
+    let result = c.smoothstep(&a, &b);
+    assert_eq!(result.x, 0.5);
+    assert_eq!(result.y, 1.0);
+}
+
+#[test]
+fn float2_sqrt() {
+    let a = Float2::new(4.0, 9.0);
+    let result = a.sqrt();
+    assert_eq!(result.x, 2.0);
+    assert_eq!(result.y, 3.0);
+}
+
+#[test]
+fn float2_step() {
+    let a = Float2::new(0.5, 0.8);
+    let b = Float2::new(0.3, 1.0);
+    let result = a.step(&b);
+    assert_eq!(result.x, 1.0);
+    assert_eq!(result.y, 0.0);
+}
+
+#[test]
+fn float2_tan() {
+    let a = Float2::new(PI / 4.0, PI / 6.0);
+    let result = a.tan();
+    assert_eq!(result.x, 1.0);
+    assert_eq!(result.y, 0.57735026);
+}
+
+#[test]
+fn float2_tanh() {
+    let a = Float2::new(PI / 4.0, PI / 6.0);
+    let result = a.tanh();
+    assert_eq!(result.x, 0.65579426);
+    assert_eq!(result.y, 0.4804728);
+}
+
+#[test]
+fn float2_trunc() {
+    let a = Float2::new(25.2, 4.81);
+    let result = a.trunc();
+    assert_eq!(result.x, 25.0);
+    assert_eq!(result.y, 4.0);
+}
+
+#[test]
+fn float2_ldexp() {
+    let value = Float2::new(1.5, 2.5);
+    let exponent = Float2::new(2.0, -1.0);
+    let result = value.ldexp(&exponent);
+    assert_eq!(result.x, 6.0);
+    assert_eq!(result.y, 1.25);
 }
 
 #[test]

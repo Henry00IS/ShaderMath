@@ -8,7 +8,7 @@ Add the following line to your Cargo.toml:
 
 ```toml
 [dependencies]
-shadermath = "0.2"
+shadermath = "0.3"
 ```
 
 ## Support:

@@ -1,8 +1,9 @@
 [package]
 name = "shadermath"
-version = "0.2.1"
+version = "0.3.0"
 edition = "2024"
 license = "MIT"
+authors = ["Henry de Jongh"]
 keywords = ["hlsl", "glsl", "math", "shader", "gamedev"]
 categories = ["mathematics", "game-development"]
 description = "HLSL inspired mathematics library for Rust"

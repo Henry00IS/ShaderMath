@@ -177,7 +177,7 @@ impl Float2 {
         self.y.atan2(self.x)
     }
 
-    /// Computes the per-component smallest integer greater than or equal to `self.x` and `self.y` respectively.
+    /// Computes the per-component smallest integers greater than or equal to `self.x` and `self.y` respectively.
     pub fn ceil(&self) -> Self {
         Self {
             x: self.x.ceil(),
@@ -229,6 +229,137 @@ impl Float2 {
         self.x * rhs.x + self.y * rhs.y
     }
 
+    /// Computes the per-component e^(self), the exponential function.
+    pub fn exp(&self) -> Self {
+        Self {
+            x: self.x.exp(),
+            y: self.y.exp(),
+        }
+    }
+
+    /// Computes the per-component 2^(self).
+    pub fn exp2(&self) -> Self {
+        Self {
+            x: self.x.exp2(),
+            y: self.y.exp2(),
+        }
+    }
+
+    /// Computes the per-component largest integers less than or equal to `self.x` and `self.y` respectively.
+    pub fn floor(&self) -> Self {
+        Self {
+            x: self.x.floor(),
+            y: self.y.floor(),
+        }
+    }
+
+    /// Computes the floating-point remainder of division for each component.
+    pub fn fmod(&self, rhs: &Self) -> Self {
+        Self {
+            x: self.x % rhs.x,
+            y: self.y % rhs.y,
+        }
+    }
+
+    /// Computes the fractional (or decimal) part of x; which is greater than or equal to 0 and less than 1.
+    pub fn frac(&self) -> Self {
+        Self {
+            x: self.x.fract(),
+            y: self.y.fract(),
+        }
+    }
+
+    /// Computes `value * 2^exponent` for each component of the vector.
+    pub fn ldexp(&self, exponent: &Self) -> Self {
+        Self {
+            x: self.x * (2.0f32).powi(exponent.x as i32),
+            y: self.y * (2.0f32).powi(exponent.y as i32),
+        }
+    }
+
+    /// Computes the length scalar between two vectors.
+    pub fn length(&self) -> f32 {
+        (self.x * self.x + self.y * self.y).sqrt()
+    }
+
+    /// Computes a linear interpolation between two vectors.
+    pub fn lerp(&self, rhs: &Self, t: f32) -> Self {
+        Self {
+            x: self.x + t * (rhs.x - self.x),
+            y: self.y + t * (rhs.y - self.y),
+        }
+    }
+
+    /// Computes the natural logarithm (base e) of each component of the vector.
+    pub fn log(&self) -> Self {
+        Self {
+            x: self.x.ln(),
+            y: self.y.ln(),
+        }
+    }
+
+    /// Computes the natural logarithm (base 10) of each component of the vector.
+    pub fn log10(&self) -> Self {
+        Self {
+            x: self.x.log10(),
+            y: self.y.log10(),
+        }
+    }
+
+    /// Computes the natural logarithm (base 2) of each component of the vector.
+    pub fn log2(&self) -> Self {
+        Self {
+            x: self.x.log2(),
+            y: self.y.log2(),
+        }
+    }
+
+    /// Computes the multiply-add operation: (self * b) + c.
+    pub fn mad(&self, b: &Self, c: &Self) -> Self {
+        Self {
+            x: self.x * b.x + c.x,
+            y: self.y * b.y + c.y,
+        }
+    }
+
+    /// Computes the component-wise maximum of two vectors.
+    pub fn max(&self, rhs: &Self) -> Self {
+        Self {
+            x: self.x.max(rhs.x),
+            y: self.y.max(rhs.y),
+        }
+    }
+
+    /// Computes the component-wise minimum of two vectors.
+    pub fn min(&self, rhs: &Self) -> Self {
+        Self {
+            x: self.x.min(rhs.x),
+            y: self.y.min(rhs.y),
+        }
+    }
+
+    /// Computes the normalized vector (unit vector) of `self`.
+    pub fn normalize(&self) -> Self {
+        let length = self.length();
+        if length != 0.0 {
+            Self {
+                x: self.x / length,
+                y: self.y / length,
+            }
+        } else {
+            // return the zero vector if the input vector has zero length.
+            Self { x: 0.0, y: 0.0 }
+        }
+    }
+
+    /// Computes the component-wise power: `self^exponent`.
+    pub fn pow(&self, exponent: f32) -> Self {
+        Self {
+            x: self.x.powf(exponent),
+            y: self.y.powf(exponent),
+        }
+    }
+
     /// Converts the per-component numbers from degrees to radians.
     pub fn radians(&self) -> Self {
         Self {
@@ -237,11 +368,162 @@ impl Float2 {
         }
     }
 
+    /// Computes the reciprocal of each component of the vector.
+    /// Equivalent to `1 / self`.
+    pub fn rcp(&self) -> Self {
+        Self {
+            x: 1.0 / self.x,
+            y: 1.0 / self.y,
+        }
+    }
+
+    /// Computes the reciprocal of each component of the vector.
+    /// Equivalent to `1 / self` and returning 0 when self is 0.
+    pub fn rcp_safe(&self) -> Self {
+        Self {
+            x: if self.x != 0.0 { 1.0 / self.x } else { 0.0 },
+            y: if self.y != 0.0 { 1.0 / self.y } else { 0.0 },
+        }
+    }
+
+    /// Computes the reflection of an incident vector `self` about a normal vector `normal`.
+    pub fn reflect(&self, normal: &Self) -> Self {
+        let dot = self.dot(normal);
+        Self {
+            x: self.x - 2.0 * dot * normal.x,
+            y: self.y - 2.0 * dot * normal.y,
+        }
+    }
+
+    /// Computes the refraction vector for the given incident vector, normal, and refraction index.
+    pub fn refract(&self, normal: &Self, eta: f32) -> Self {
+        let dot_n_i = self.dot(normal);
+        let k = 1.0 - eta * eta * (1.0 - dot_n_i * dot_n_i);
+        if k < 0.0 {
+            Self { x: 0.0, y: 0.0 }
+        } else {
+            let scale_i = eta;
+            let scale_n = eta * dot_n_i + k.sqrt();
+            Self {
+                x: scale_i * self.x - scale_n * normal.x,
+                y: scale_i * self.y - scale_n * normal.y,
+            }
+        }
+    }
+
+    /// Rounds each component of the vector to the nearest integer.
+    pub fn round(&self) -> Self {
+        Self {
+            x: self.x.round(),
+            y: self.y.round(),
+        }
+    }
+
+    /// Computes the reciprocal square root of each component of the vector.
+    pub fn rsqrt(&self) -> Self {
+        Self {
+            x: if self.x != 0.0 {
+                1.0 / self.x.sqrt()
+            } else {
+                f32::INFINITY
+            },
+            y: if self.y != 0.0 {
+                1.0 / self.y.sqrt()
+            } else {
+                f32::INFINITY
+            },
+        }
+    }
+
+    /// Clamps each component of the vector to the range [0, 1].
+    pub fn saturate(&self) -> Self {
+        Self {
+            x: self.x.clamp(0.0, 1.0),
+            y: self.y.clamp(0.0, 1.0),
+        }
+    }
+
+    /// Computes the sign of each component of the vector.
+    pub fn sign(&self) -> Self {
+        Self {
+            x: self.x.signum(),
+            y: self.y.signum(),
+        }
+    }
+
     /// Computes the per-component sine numbers (in radians).
     pub fn sin(&self) -> Self {
         Self {
             x: self.x.sin(),
             y: self.y.sin(),
+        }
+    }
+
+    /// Computes the per-component hyperbolic sine numbers.
+    pub fn sinh(&self) -> Self {
+        Self {
+            x: self.x.sinh(),
+            y: self.y.sinh(),
+        }
+    }
+
+    /// Performs smoothstep interpolation on each component of the vector.
+    pub fn smoothstep(&self, min: &Self, max: &Self) -> Self {
+        fn smoothstep_component(min: f32, max: f32, value: f32) -> f32 {
+            if value <= min {
+                0.0
+            } else if value >= max {
+                1.0
+            } else {
+                let t = (value - min) / (max - min);
+                t * t * (3.0 - 2.0 * t)
+            }
+        }
+
+        Self {
+            x: smoothstep_component(min.x, max.x, self.x),
+            y: smoothstep_component(min.y, max.y, self.y),
+        }
+    }
+
+    /// Computes the square root of each component of the vector.
+    pub fn sqrt(&self) -> Self {
+        Self {
+            x: self.x.sqrt(),
+            y: self.y.sqrt(),
+        }
+    }
+
+    /// Computes the component-wise step function.
+    /// For each component: returns 0.0 if `self < edge`, else returns 1.0.
+    pub fn step(&self, edge: &Self) -> Self {
+        Self {
+            x: if self.x < edge.x { 0.0 } else { 1.0 },
+            y: if self.y < edge.y { 0.0 } else { 1.0 },
+        }
+    }
+
+    /// Computes the per-component tangent numbers (in radians).
+    pub fn tan(&self) -> Self {
+        Self {
+            x: self.x.tan(),
+            y: self.y.tan(),
+        }
+    }
+
+    /// Computes the per-component hyperbolic tangent numbers.
+    pub fn tanh(&self) -> Self {
+        Self {
+            x: self.x.tanh(),
+            y: self.y.tanh(),
+        }
+    }
+
+    /// Truncates each component of the vector to its integer portion.
+    pub fn trunc(&self) -> Self {
+        Self {
+            x: self.x.trunc(),
+            y: self.y.trunc(),
         }
     }
 
