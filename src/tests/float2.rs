@@ -1,5 +1,6 @@
 use crate::math::Float2;
 use crate::math::Float3;
+use crate::math::Float4;
 use core::f32::consts::PI;
 
 #[test]
@@ -19,12 +20,26 @@ fn float2_ops_add() {
 }
 
 #[test]
+fn float2_ops_add_f32() {
+    let a = Float2::new(1.0, 2.0);
+    let b = a + 0.5;
+    assert_eq!(b, Float2::new(1.5, 2.5));
+}
+
+#[test]
 fn float2_ops_add_assign() {
     let mut result = Float2::new(1.5, 2.25);
     let b = Float2::new(3.1, 2.75);
     result += b;
     assert_eq!(result.x, 4.6);
     assert_eq!(result.y, 5.0);
+}
+
+#[test]
+fn float2_ops_add_assign_f32() {
+    let mut a = Float2::new(1.0, 2.0);
+    a += 0.5;
+    assert_eq!(a, Float2::new(1.5, 2.5));
 }
 
 #[test]
@@ -37,12 +52,26 @@ fn float2_ops_sub() {
 }
 
 #[test]
+fn float2_ops_sub_f32() {
+    let a = Float2::new(1.0, 2.0);
+    let b = a - 0.5;
+    assert_eq!(b, Float2::new(0.5, 1.5));
+}
+
+#[test]
 fn float2_ops_sub_assign() {
     let mut result = Float2::new(1.5, 2.25);
     let b = Float2::new(3.1, 2.75);
     result -= b;
     assert_eq!(result.x, -1.5999999);
     assert_eq!(result.y, -0.5);
+}
+
+#[test]
+fn float2_ops_sub_assign_f32() {
+    let mut a = Float2::new(1.0, 2.0);
+    a -= 0.5;
+    assert_eq!(a, Float2::new(0.5, 1.5));
 }
 
 #[test]
@@ -55,12 +84,26 @@ fn float2_ops_mul() {
 }
 
 #[test]
+fn float2_ops_mul_f32() {
+    let a = Float2::new(1.0, 2.0);
+    let b = a * 0.5;
+    assert_eq!(b, Float2::new(0.5, 1.0));
+}
+
+#[test]
 fn float2_ops_mul_assign() {
     let mut result = Float2::new(1.5, 2.5);
     let b = Float2::new(3.0, 2.0);
     result *= b;
     assert_eq!(result.x, 4.5);
     assert_eq!(result.y, 5.0);
+}
+
+#[test]
+fn float2_ops_mul_assign_f32() {
+    let mut a = Float2::new(1.0, 2.0);
+    a *= 0.5;
+    assert_eq!(a, Float2::new(0.5, 1.0));
 }
 
 #[test]
@@ -73,12 +116,26 @@ fn float2_ops_div() {
 }
 
 #[test]
+fn float2_ops_div_f32() {
+    let a = Float2::new(1.0, 2.0);
+    let b = a / 0.5;
+    assert_eq!(b, Float2::new(2.0, 4.0));
+}
+
+#[test]
 fn float2_ops_div_assign() {
     let mut result = Float2::new(1.5, 2.5);
     let b = Float2::new(3.0, 2.0);
     result /= b;
     assert_eq!(result.x, 0.5);
     assert_eq!(result.y, 1.25);
+}
+
+#[test]
+fn float2_ops_div_assign_f32() {
+    let mut a = Float2::new(1.0, 2.0);
+    a /= 0.5;
+    assert_eq!(a, Float2::new(2.0, 4.0));
 }
 
 #[test]
@@ -503,6 +560,7 @@ fn float2_swizzle() {
     assert_eq!(a.xy(), Float2::new(x, y));
     assert_eq!(a.yx(), Float2::new(y, x));
     assert_eq!(a.yy(), Float2::new(y, y));
+
     assert_eq!(a.xxx(), Float3::new(x, x, x));
     assert_eq!(a.xxy(), Float3::new(x, x, y));
     assert_eq!(a.xyx(), Float3::new(x, y, x));
@@ -511,4 +569,22 @@ fn float2_swizzle() {
     assert_eq!(a.yxy(), Float3::new(y, x, y));
     assert_eq!(a.yyx(), Float3::new(y, y, x));
     assert_eq!(a.yyy(), Float3::new(y, y, y));
+
+    assert_eq!(a.xxxx(), Float4::new(x, x, x, x));
+    assert_eq!(a.xxxy(), Float4::new(x, x, x, y));
+    assert_eq!(a.xxyx(), Float4::new(x, x, y, x));
+    assert_eq!(a.xxyy(), Float4::new(x, x, y, y));
+    assert_eq!(a.xyxx(), Float4::new(x, y, x, x));
+    assert_eq!(a.xyxy(), Float4::new(x, y, x, y));
+    assert_eq!(a.xyyx(), Float4::new(x, y, y, x));
+    assert_eq!(a.xyyy(), Float4::new(x, y, y, y));
+
+    assert_eq!(a.yxxx(), Float4::new(y, x, x, x));
+    assert_eq!(a.yxxy(), Float4::new(y, x, x, y));
+    assert_eq!(a.yxyx(), Float4::new(y, x, y, x));
+    assert_eq!(a.yxyy(), Float4::new(y, x, y, y));
+    assert_eq!(a.yyxx(), Float4::new(y, y, x, x));
+    assert_eq!(a.yyxy(), Float4::new(y, y, x, y));
+    assert_eq!(a.yyyx(), Float4::new(y, y, y, x));
+    assert_eq!(a.yyyy(), Float4::new(y, y, y, y));
 }

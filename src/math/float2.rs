@@ -2,6 +2,7 @@ use core::fmt;
 use core::ops;
 
 use super::Float3;
+use super::Float4;
 
 /// Vector containing 2 floating point values.
 #[derive(Copy, Clone, Debug)]
@@ -29,10 +30,28 @@ impl ops::Add<Self> for Float2 {
     }
 }
 
+impl ops::Add<f32> for Float2 {
+    type Output = Self;
+
+    fn add(self, rhs: f32) -> Self {
+        Self {
+            x: self.x + rhs,
+            y: self.y + rhs,
+        }
+    }
+}
+
 impl ops::AddAssign<Self> for Float2 {
     fn add_assign(&mut self, rhs: Self) {
         self.x += rhs.x;
         self.y += rhs.y;
+    }
+}
+
+impl ops::AddAssign<f32> for Float2 {
+    fn add_assign(&mut self, rhs: f32) {
+        self.x += rhs;
+        self.y += rhs;
     }
 }
 
@@ -47,10 +66,28 @@ impl ops::Sub<Self> for Float2 {
     }
 }
 
+impl ops::Sub<f32> for Float2 {
+    type Output = Self;
+
+    fn sub(self, rhs: f32) -> Self {
+        Self {
+            x: self.x - rhs,
+            y: self.y - rhs,
+        }
+    }
+}
+
 impl ops::SubAssign<Self> for Float2 {
     fn sub_assign(&mut self, rhs: Self) {
         self.x -= rhs.x;
         self.y -= rhs.y;
+    }
+}
+
+impl ops::SubAssign<f32> for Float2 {
+    fn sub_assign(&mut self, rhs: f32) {
+        self.x -= rhs;
+        self.y -= rhs;
     }
 }
 
@@ -65,10 +102,28 @@ impl ops::Mul<Self> for Float2 {
     }
 }
 
+impl ops::Mul<f32> for Float2 {
+    type Output = Self;
+
+    fn mul(self, rhs: f32) -> Self {
+        Self {
+            x: self.x * rhs,
+            y: self.y * rhs,
+        }
+    }
+}
+
 impl ops::MulAssign<Self> for Float2 {
     fn mul_assign(&mut self, rhs: Self) {
         self.x *= rhs.x;
         self.y *= rhs.y;
+    }
+}
+
+impl ops::MulAssign<f32> for Float2 {
+    fn mul_assign(&mut self, rhs: f32) {
+        self.x *= rhs;
+        self.y *= rhs;
     }
 }
 
@@ -83,10 +138,28 @@ impl ops::Div<Self> for Float2 {
     }
 }
 
+impl ops::Div<f32> for Float2 {
+    type Output = Self;
+
+    fn div(self, rhs: f32) -> Self {
+        Self {
+            x: self.x / rhs,
+            y: self.y / rhs,
+        }
+    }
+}
+
 impl ops::DivAssign<Self> for Float2 {
     fn div_assign(&mut self, rhs: Self) {
         self.x /= rhs.x;
         self.y /= rhs.y;
+    }
+}
+
+impl ops::DivAssign<f32> for Float2 {
+    fn div_assign(&mut self, rhs: f32) {
+        self.x /= rhs;
+        self.y /= rhs;
     }
 }
 
@@ -628,6 +701,166 @@ impl Float2 {
             x: self.y,
             y: self.y,
             z: self.y,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn xxxx(&self) -> Float4 {
+        Float4 {
+            x: self.x,
+            y: self.x,
+            z: self.x,
+            w: self.x,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn xxxy(&self) -> Float4 {
+        Float4 {
+            x: self.x,
+            y: self.x,
+            z: self.x,
+            w: self.y,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn xxyx(&self) -> Float4 {
+        Float4 {
+            x: self.x,
+            y: self.x,
+            z: self.y,
+            w: self.x,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn xxyy(&self) -> Float4 {
+        Float4 {
+            x: self.x,
+            y: self.x,
+            z: self.y,
+            w: self.y,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn xyxx(&self) -> Float4 {
+        Float4 {
+            x: self.x,
+            y: self.y,
+            z: self.x,
+            w: self.x,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn xyxy(&self) -> Float4 {
+        Float4 {
+            x: self.x,
+            y: self.y,
+            z: self.x,
+            w: self.y,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn xyyx(&self) -> Float4 {
+        Float4 {
+            x: self.x,
+            y: self.y,
+            z: self.y,
+            w: self.x,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn xyyy(&self) -> Float4 {
+        Float4 {
+            x: self.x,
+            y: self.y,
+            z: self.y,
+            w: self.y,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn yxxx(&self) -> Float4 {
+        Float4 {
+            x: self.y,
+            y: self.x,
+            z: self.x,
+            w: self.x,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn yxxy(&self) -> Float4 {
+        Float4 {
+            x: self.y,
+            y: self.x,
+            z: self.x,
+            w: self.y,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn yxyx(&self) -> Float4 {
+        Float4 {
+            x: self.y,
+            y: self.x,
+            z: self.y,
+            w: self.x,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn yxyy(&self) -> Float4 {
+        Float4 {
+            x: self.y,
+            y: self.x,
+            z: self.y,
+            w: self.y,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn yyxx(&self) -> Float4 {
+        Float4 {
+            x: self.y,
+            y: self.y,
+            z: self.x,
+            w: self.x,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn yyxy(&self) -> Float4 {
+        Float4 {
+            x: self.y,
+            y: self.y,
+            z: self.x,
+            w: self.y,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn yyyx(&self) -> Float4 {
+        Float4 {
+            x: self.y,
+            y: self.y,
+            z: self.y,
+            w: self.x,
+        }
+    }
+
+    /// Returns a swizzled vector.
+    pub fn yyyy(&self) -> Float4 {
+        Float4 {
+            x: self.y,
+            y: self.y,
+            z: self.y,
+            w: self.y,
         }
     }
 }
