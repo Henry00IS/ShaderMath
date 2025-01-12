@@ -1,5 +1,4 @@
 use core::fmt;
-use core::ops;
 
 /// Vector containing 3 floating point values.
 #[derive(Copy, Clone, Debug)]
