@@ -454,6 +454,7 @@ fn float3_rcp() {
     let result = a.rcp();
     assert_eq!(result.x, 0.5);
     assert_eq!(result.y, 0.25);
+    assert_eq!(result.z, 0.125);
     let a = Float3::new(2.0, 0.0, 8.0);
     let result = a.rcp_safe();
     assert_eq!(result.y, 0.0);
@@ -542,7 +543,7 @@ fn float3_smoothstep() {
     let result = c.smoothstep(&a, &b);
     assert_eq!(result.x, 0.5);
     assert_eq!(result.y, 1.0);
-    assert_eq!(result.y, 1.0);
+    assert_eq!(result.z, 1.0);
 }
 
 #[test]
