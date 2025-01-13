@@ -334,7 +334,7 @@ impl Float2 {
         }
     }
 
-    /// Computes the fractional (or decimal) part of x; which is greater than or equal to 0 and less than 1.
+    /// Computes the fractional (or decimal) part of each component; which is greater than or equal to 0 and less than 1.
     pub fn frac(&self) -> Self {
         Self {
             x: self.x.fract(),
@@ -601,32 +601,32 @@ impl Float2 {
     }
 
     /// Returns a swizzled vector.
-    pub fn xx(&self) -> Self {
-        Self {
+    pub fn xx(&self) -> Float2 {
+        Float2 {
             x: self.x,
             y: self.x,
         }
     }
 
     /// Returns a swizzled vector.
-    pub fn xy(&self) -> Self {
-        Self {
+    pub fn xy(&self) -> Float2 {
+        Float2 {
             x: self.x,
             y: self.y,
         }
     }
 
     /// Returns a swizzled vector.
-    pub fn yx(&self) -> Self {
-        Self {
+    pub fn yx(&self) -> Float2 {
+        Float2 {
             x: self.y,
             y: self.x,
         }
     }
 
     /// Returns a swizzled vector.
-    pub fn yy(&self) -> Self {
-        Self {
+    pub fn yy(&self) -> Float2 {
+        Float2 {
             x: self.y,
             y: self.y,
         }

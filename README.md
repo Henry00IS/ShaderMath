@@ -4,7 +4,7 @@ This crate brings HLSL mathematics to Rust.
 
 Please note that this crate is an active work in progress.
 
-`Float2` is ready to be used.
+`Float2` and `Float3` are ready to be used.
 
 ## Installation Instructions:
 
@@ -12,12 +12,12 @@ Add the following line to your Cargo.toml:
 
 ```toml
 [dependencies]
-shadermath = "0.4"
+shadermath = "0.5"
 ```
 
 ## Support:
 
-Feel free to join my Discord server and let's talk about it.
+Feel free to [join my Discord server](https://discord.gg/sKEvrBwHtq) and let's talk about it.
 
 [![](https://dcbadge.vercel.app/api/server/sKEvrBwHtq)](https://discord.gg/sKEvrBwHtq)
 

@@ -1,3 +1,4 @@
 /.vscode
 /target
+/purebasic
 Cargo.lock

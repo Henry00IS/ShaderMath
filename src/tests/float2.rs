@@ -337,6 +337,15 @@ fn float2_frac() {
 }
 
 #[test]
+fn float2_ldexp() {
+    let value = Float2::new(1.5, 2.5);
+    let exponent = Float2::new(2.0, -1.0);
+    let result = value.ldexp(&exponent);
+    assert_eq!(result.x, 6.0);
+    assert_eq!(result.y, 1.25);
+}
+
+#[test]
 fn float2_length() {
     let a = Float2::new(0.7, 0.714143);
     let result = a.length();
@@ -543,15 +552,6 @@ fn float2_trunc() {
 }
 
 #[test]
-fn float2_ldexp() {
-    let value = Float2::new(1.5, 2.5);
-    let exponent = Float2::new(2.0, -1.0);
-    let result = value.ldexp(&exponent);
-    assert_eq!(result.x, 6.0);
-    assert_eq!(result.y, 1.25);
-}
-
-#[test]
 fn float2_swizzle() {
     let x = 1.0;
     let y = 2.0;
@@ -578,7 +578,6 @@ fn float2_swizzle() {
     assert_eq!(a.xyxy(), Float4::new(x, y, x, y));
     assert_eq!(a.xyyx(), Float4::new(x, y, y, x));
     assert_eq!(a.xyyy(), Float4::new(x, y, y, y));
-
     assert_eq!(a.yxxx(), Float4::new(y, x, x, x));
     assert_eq!(a.yxxy(), Float4::new(y, x, x, y));
     assert_eq!(a.yxyx(), Float4::new(y, x, y, x));
